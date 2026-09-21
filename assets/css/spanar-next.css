@@ -25,3 +25,10 @@ html[data-theme="dark"]{color-scheme:dark;--bg:#05070a;--panel:#0b0f15;--panel2:
 html[data-theme="dark"] .brand-logo{background:#fff;border-radius:13px;padding:3px 10px}
 html[data-theme="dark"] .brand-logo img{filter:none!important}
 @media(max-width:800px){.brand-logo{height:52px;min-width:178px}.brand-logo img{width:178px;height:52px}}
+
+/* Exact supplied official logo artwork */
+.brand-logo{height:62px;min-width:220px;padding:0!important;background:transparent!important}
+.brand-logo img{display:block;width:220px;height:62px;object-fit:contain;object-position:left center;filter:none!important}
+html[data-theme="dark"] .brand-logo{background:#fff!important;border-radius:14px;padding:2px 9px!important}
+html[data-theme="dark"] .brand-logo img{filter:none!important}
+@media(max-width:800px){.brand-logo{height:50px;min-width:172px}.brand-logo img{width:172px;height:50px}}
