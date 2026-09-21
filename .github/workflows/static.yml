@@ -39,6 +39,8 @@ jobs:
           test -f assets/css/spanar-next.css
           test -f assets/img/spanar-favicon.svg
           grep -q "AI-native products" index.html
+      - name: Verify site files
+        run: test -f index.html && test -f assets/css/spanar-next.css && test -f assets/img/spanar-favicon.svg
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
