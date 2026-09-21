@@ -1,971 +1,431 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spanar Systems | AI-powered products for real-world journeys</title>
+  <meta name="description" content="Spanar Systems is a product company building Velocity, an AI-powered SaaS platform, and Temple, a thoughtful guide for spiritual journeys.">
+  <meta name="theme-color" content="#071612">
+  <link rel="canonical" href="https://www.spanarsystems.com/">
+  <link rel="icon" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Spanar Systems | Shape what's next">
+  <meta property="og:description" content="AI-powered software products designed around real-world operations and meaningful human experiences.">
+  <meta property="og:url" content="https://www.spanarsystems.com/">
+  <style>
+    :root {
+      --ink: #0b1915;
+      --muted: #5d6a65;
+      --paper: #f4f5ef;
+      --white: #ffffff;
+      --green: #147d64;
+      --green-dark: #075742;
+      --mint: #b9efd9;
+      --mint-soft: #e5f6ee;
+      --gold: #f3ba57;
+      --violet: #7259d6;
+      --line: rgba(11, 25, 21, .12);
+      --shadow: 0 28px 90px rgba(14, 48, 38, .13);
+      --radius: 28px;
+    }
 
-  <title>Spanar Systems - Leading Solutions Provider</title>
-  <meta name="description" content="Spanar Systems offers innovative solutions for businesses worldwide. Contact us for industry-leading services in technology, consulting, and more.">
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .shell { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
 
-  <!-- Favicons -->
-  <!-- <link href="assets/img/favicon.png" rel="icon"> -->
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(244, 245, 239, .86);
+      border-bottom: 1px solid rgba(11, 25, 21, .08);
+      backdrop-filter: blur(18px);
+    }
+    .nav-wrap { height: 78px; display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: inline-flex; align-items: center; gap: 11px; font-size: 1.02rem; font-weight: 780; letter-spacing: -.02em; }
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      color: white;
+      background: var(--ink);
+      border-radius: 12px;
+      font-size: 1.05rem;
+      box-shadow: 0 8px 20px rgba(11, 25, 21, .2);
+    }
+    .nav-links { display: flex; align-items: center; gap: 30px; font-size: .93rem; font-weight: 650; }
+    .nav-links a:not(.button):hover { color: var(--green); }
+    .menu-button { display: none; border: 0; background: transparent; cursor: pointer; padding: 7px; }
+    .menu-button span { display: block; width: 24px; height: 2px; background: var(--ink); margin: 5px; }
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    .button {
+      min-height: 48px;
+      padding: 0 21px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      font-size: .93rem;
+      font-weight: 740;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .button:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(11, 25, 21, .14); }
+    .button.dark { color: white; background: var(--ink); }
+    .button.light { background: rgba(255, 255, 255, .56); }
 
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    .hero { position: relative; overflow: hidden; padding: 96px 0 82px; }
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 620px;
+      height: 620px;
+      right: -220px;
+      top: -250px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(185, 239, 217, .85), rgba(185, 239, 217, 0) 67%);
+      pointer-events: none;
+    }
+    .hero-grid { position: relative; display: grid; grid-template-columns: 1.08fr .92fr; align-items: center; gap: 72px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 22px;
+      color: var(--green-dark);
+      font-size: .76rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: 24px; height: 2px; background: var(--green); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { max-width: 760px; margin-bottom: 24px; font-size: clamp(3.1rem, 6.2vw, 6.4rem); line-height: .96; letter-spacing: -.065em; }
+    h1 em { color: var(--green); font-family: Georgia, serif; font-weight: 500; }
+    .hero-copy > p { max-width: 650px; margin-bottom: 34px; color: var(--muted); font-size: clamp(1.04rem, 1.8vw, 1.24rem); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .hero-note { margin-top: 32px; display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: .86rem; }
+    .status-dot { width: 9px; height: 9px; border-radius: 50%; background: #2bb673; box-shadow: 0 0 0 5px rgba(43, 182, 115, .13); }
 
-  <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
+    .product-orbit {
+      position: relative;
+      min-height: 510px;
+      border: 1px solid rgba(255, 255, 255, .75);
+      border-radius: 42px;
+      background:
+        linear-gradient(rgba(255,255,255,.64), rgba(255,255,255,.64)),
+        radial-gradient(circle at 30% 24%, #c7f4e2, transparent 34%),
+        radial-gradient(circle at 75% 72%, #fae1ac, transparent 38%);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .product-orbit::before, .product-orbit::after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(11,25,21,.1);
+      border-radius: 50%;
+      inset: 14%;
+    }
+    .product-orbit::after { inset: 30%; }
+    .orbit-core {
+      position: absolute;
+      inset: 50% auto auto 50%;
+      width: 160px;
+      height: 160px;
+      transform: translate(-50%, -50%);
+      display: grid;
+      place-items: center;
+      color: white;
+      text-align: center;
+      background: var(--ink);
+      border-radius: 42px;
+      box-shadow: 0 24px 60px rgba(11,25,21,.25);
+    }
+    .orbit-core strong { display: block; font-size: 1.28rem; }
+    .orbit-core small { color: rgba(255,255,255,.65); font-weight: 650; }
+    .orbit-card {
+      position: absolute;
+      padding: 17px 19px;
+      background: rgba(255,255,255,.92);
+      border: 1px solid rgba(11,25,21,.08);
+      border-radius: 18px;
+      box-shadow: 0 14px 36px rgba(11,25,21,.11);
+      font-size: .82rem;
+      font-weight: 720;
+    }
+    .orbit-card span { display: block; margin-bottom: 3px; color: var(--muted); font-size: .7rem; font-weight: 650; letter-spacing: .06em; text-transform: uppercase; }
+    .orbit-card.one { top: 14%; left: 9%; }
+    .orbit-card.two { top: 16%; right: 7%; }
+    .orbit-card.three { bottom: 14%; left: 8%; }
+    .orbit-card.four { right: 8%; bottom: 13%; }
 
-  <!-- =======================================================
-  * Template Name: BizLand
-  * Updated: Mar 10 2023 with Bootstrap v5.2.3
-  * Template URL: https://bootstrapmade.com/bizland-bootstrap-business-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+    section { padding: 100px 0; }
+    .section-kicker { color: var(--green); font-size: .77rem; font-weight: 820; letter-spacing: .14em; text-transform: uppercase; }
+    .section-title { max-width: 760px; margin: 12px 0 46px; font-size: clamp(2.2rem, 4vw, 4.2rem); line-height: 1.02; letter-spacing: -.052em; }
+    .section-intro { max-width: 670px; margin: -28px 0 46px; color: var(--muted); font-size: 1.08rem; }
+
+    .products { background: var(--white); }
+    .product-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 22px; }
+    .product-card { position: relative; min-height: 590px; padding: 42px; border-radius: var(--radius); overflow: hidden; }
+    .velocity { color: white; background: #0c2b23; }
+    .temple { color: #332113; background: #f2c66f; }
+    .product-card .label { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: .74rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .product-card .stage { padding: 7px 11px; border: 1px solid currentColor; border-radius: 999px; opacity: .72; }
+    .product-card h3 { margin: 72px 0 15px; font-size: clamp(2.7rem, 5vw, 5.4rem); line-height: .95; letter-spacing: -.06em; }
+    .product-card .product-line { max-width: 540px; font-size: 1.16rem; opacity: .78; }
+    .feature-list { position: absolute; left: 42px; right: 42px; bottom: 40px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .feature { padding: 15px 16px; border: 1px solid rgba(255,255,255,.18); border-radius: 15px; background: rgba(255,255,255,.07); font-size: .84rem; font-weight: 650; }
+    .temple .feature { border-color: rgba(51,33,19,.16); background: rgba(255,255,255,.24); }
+    .temple::after {
+      content: "";
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      right: -110px;
+      top: 145px;
+      border: 46px solid rgba(255,255,255,.21);
+      border-radius: 50%;
+    }
+
+    .platform { background: var(--ink); color: white; }
+    .platform .section-kicker { color: var(--mint); }
+    .platform-layout { display: grid; grid-template-columns: .85fr 1.15fr; gap: 80px; align-items: start; }
+    .platform-copy { color: rgba(255,255,255,.67); font-size: 1.08rem; }
+    .capability-list { border-top: 1px solid rgba(255,255,255,.16); }
+    .capability { display: grid; grid-template-columns: 55px 1fr; gap: 20px; padding: 25px 0; border-bottom: 1px solid rgba(255,255,255,.16); }
+    .capability-number { color: var(--mint); font-size: .78rem; font-weight: 800; letter-spacing: .12em; }
+    .capability h3 { margin-bottom: 5px; font-size: 1.22rem; }
+    .capability p { margin: 0; color: rgba(255,255,255,.58); font-size: .92rem; }
+
+    .principles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .principle { padding: 31px; border: 1px solid var(--line); border-radius: 22px; background: rgba(255,255,255,.48); }
+    .principle-index { width: 42px; height: 42px; margin-bottom: 56px; display: grid; place-items: center; background: var(--mint-soft); border-radius: 13px; color: var(--green-dark); font-weight: 800; }
+    .principle h3 { margin-bottom: 10px; font-size: 1.28rem; }
+    .principle p { margin: 0; color: var(--muted); font-size: .94rem; }
+
+    .about { padding-top: 35px; }
+    .about-card { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; padding: 60px; background: var(--mint-soft); border-radius: 34px; }
+    .about-card h2 { margin: 0; font-size: clamp(2.3rem, 4vw, 4.2rem); line-height: 1.02; letter-spacing: -.052em; }
+    .about-card p { color: #466057; font-size: 1.05rem; }
+    .about-card p:last-child { margin-bottom: 0; }
+
+    .contact { padding-bottom: 36px; }
+    .contact-card {
+      position: relative;
+      padding: 78px 30px;
+      color: white;
+      text-align: center;
+      background: var(--green);
+      border-radius: 34px;
+      overflow: hidden;
+    }
+    .contact-card::before { content: ""; position: absolute; width: 320px; height: 320px; left: -130px; bottom: -180px; border: 1px solid rgba(255,255,255,.28); border-radius: 50%; box-shadow: 0 0 0 55px rgba(255,255,255,.05), 0 0 0 110px rgba(255,255,255,.04); }
+    .contact-card h2 { position: relative; max-width: 720px; margin: 0 auto 17px; font-size: clamp(2.4rem, 5vw, 4.8rem); line-height: 1; letter-spacing: -.055em; }
+    .contact-card p { position: relative; margin-bottom: 28px; color: rgba(255,255,255,.75); }
+    .contact-card .button { position: relative; color: var(--ink); background: white; border-color: white; }
+
+    footer { padding: 28px 0 34px; }
+    .footer-wrap { display: flex; align-items: center; justify-content: space-between; gap: 25px; color: var(--muted); font-size: .84rem; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a:hover { color: var(--green); }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; position: absolute; top: 78px; left: 20px; right: 20px; padding: 22px; flex-direction: column; align-items: stretch; background: white; border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); }
+      .nav-links.open { display: flex; }
+      .menu-button { display: block; }
+      .hero { padding-top: 66px; }
+      .hero-grid, .platform-layout, .about-card { grid-template-columns: 1fr; }
+      .hero-grid { gap: 45px; }
+      .product-orbit { min-height: 440px; }
+      .product-grid { grid-template-columns: 1fr; }
+      .product-card { min-height: 520px; }
+      .principles-grid { grid-template-columns: 1fr; }
+      .principle-index { margin-bottom: 28px; }
+    }
+    @media (max-width: 560px) {
+      .shell { width: min(100% - 24px, 1180px); }
+      .hero { padding: 52px 0 64px; }
+      h1 { font-size: 3.25rem; }
+      section { padding: 76px 0; }
+      .product-orbit { min-height: 390px; }
+      .orbit-core { width: 135px; height: 135px; border-radius: 34px; }
+      .orbit-card { padding: 12px 14px; font-size: .73rem; }
+      .product-card { min-height: 570px; padding: 28px; }
+      .product-card h3 { margin-top: 55px; }
+      .feature-list { left: 28px; right: 28px; bottom: 28px; grid-template-columns: 1fr; }
+      .about-card { padding: 38px 28px; gap: 24px; }
+      .footer-wrap { align-items: flex-start; flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .button { transition: none; } }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Spanar Systems",
+    "url": "https://www.spanarsystems.com/",
+    "logo": "https://www.spanarsystems.com/assets/img/apple-touch-icon.png",
+    "description": "A product company building AI-powered SaaS platforms and purposeful digital experiences.",
+    "email": "admin@spanarsystems.com",
+    "address": { "@type": "PostalAddress", "addressLocality": "Hyderabad", "addressRegion": "Telangana", "addressCountry": "IN" },
+    "sameAs": ["https://github.com/SpanarSystems"]
+  }
+  </script>
 </head>
-
 <body>
-
-  <!-- ======= Top Bar ======= -->
-  <!-- <section id="topbar" class="d-flex align-items-center">
-    <div class="container d-flex justify-content-center justify-content-md-between">
-      <div class="contact-info d-flex align-items-center">
-        <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:venkataprasadm@spanarsystems.com">venkataprasadm@mspglobalgroup.com</a></i>
-        <i class="bi bi-phone d-flex align-items-center ms-4"><span>+91 8106884134</span></i>
-      </div>
-      <div class="social-links d-none d-md-flex align-items-center">
-        <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
-      </div>
+  <header class="site-header">
+    <div class="shell nav-wrap">
+      <a class="brand" href="#top" aria-label="Spanar Systems home"><span class="brand-mark">S</span><span>Spanar Systems</span></a>
+      <button class="menu-button" type="button" aria-label="Open navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#products">Products</a>
+        <a href="#platform">Velocity</a>
+        <a href="#principles">How we build</a>
+        <a href="#about">Company</a>
+        <a class="button dark" href="mailto:admin@spanarsystems.com">Talk to us <span aria-hidden="true">↗</span></a>
+      </nav>
     </div>
-  </section> -->
+  </header>
 
-  <!-- ======= Header ======= -->
-  <header id="header" class="d-flex align-items-center">
-    <div class="container d-flex align-items-center justify-content-between">
+  <main id="top">
+    <section class="hero">
+      <div class="shell hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">Independent product company</div>
+          <h1>Shape what’s <em>next.</em></h1>
+          <p>Spanar Systems builds AI-powered software products designed around real-world operations and meaningful human experiences.</p>
+          <div class="hero-actions">
+            <a class="button dark" href="#products">Explore our products <span aria-hidden="true">↓</span></a>
+            <a class="button light" href="#about">Meet Spanar Systems</a>
+          </div>
+          <div class="hero-note"><span class="status-dot"></span> Velocity and Temple are currently in development</div>
+        </div>
+        <div class="product-orbit" aria-label="Spanar Systems product ecosystem illustration">
+          <div class="orbit-card one"><span>Platform</span>Multi-tenant core</div>
+          <div class="orbit-card two"><span>Intelligence</span>AI-assisted workflows</div>
+          <div class="orbit-core"><div><strong>Velocity</strong><small>AI SaaS platform</small></div></div>
+          <div class="orbit-card three"><span>Experience</span>Temple journeys</div>
+          <div class="orbit-card four"><span>Foundation</span>Secure by design</div>
+        </div>
+      </div>
+    </section>
 
-      <h1 class="logo"><a href="index.html"><span>Spanar</span> Systems</a></h1>
-      <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt=""></a>-->
+    <section class="products" id="products">
+      <div class="shell">
+        <div class="section-kicker">Our products</div>
+        <h2 class="section-title">Two products. One belief: technology should make life clearer.</h2>
+        <p class="section-intro">We create focused products with strong foundations—built to remove operational friction, guide decisions and stay useful as needs evolve.</p>
+        <div class="product-grid">
+          <article class="product-card velocity">
+            <div class="label"><span>AI-powered SaaS</span><span class="stage">In development</span></div>
+            <h3>Velocity</h3>
+            <p class="product-line">A shared intelligence and operating platform for modern, domain-focused business products.</p>
+            <div class="feature-list">
+              <div class="feature">AI-assisted operations</div>
+              <div class="feature">Multi-tenant foundation</div>
+              <div class="feature">Identity and permissions</div>
+              <div class="feature">Workflows and insights</div>
+              <div class="feature">Payments and notifications</div>
+              <div class="feature">APIs and integrations</div>
+            </div>
+          </article>
+          <article class="product-card temple">
+            <div class="label"><span>Spiritual journey guide</span><span class="stage">In development</span></div>
+            <h3>Temple</h3>
+            <p class="product-line">A calm, thoughtful companion for discovering temples, understanding traditions and planning meaningful spiritual journeys.</p>
+            <div class="feature-list">
+              <div class="feature">Discover sacred places</div>
+              <div class="feature">Understand their stories</div>
+              <div class="feature">Prepare with confidence</div>
+              <div class="feature">Plan a meaningful journey</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
 
-      <nav id="navbar" class="navbar">
-        <ul>
-          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-          <li><a class="nav-link scrollto" href="#about">About</a></li>
-          <li><a class="nav-link scrollto" href="#services">Services</a></li>
-          <!-- <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>
-          <li><a class="nav-link scrollto" href="#team">Team</a></li> -->
-          <!-- <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
-            <ul>
-              <li><a href="#">Drop Down 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
-                <ul>
-                  <li><a href="#">Deep Drop Down 1</a></li>
-                  <li><a href="#">Deep Drop Down 2</a></li>
-                  <li><a href="#">Deep Drop Down 3</a></li>
-                  <li><a href="#">Deep Drop Down 4</a></li>
-                  <li><a href="#">Deep Drop Down 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Drop Down 2</a></li>
-              <li><a href="#">Drop Down 3</a></li>
-              <li><a href="#">Drop Down 4</a></li>
-            </ul>
-          </li> -->
-          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-        </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- .navbar -->
+    <section class="platform" id="platform">
+      <div class="shell platform-layout">
+        <div>
+          <div class="section-kicker">Inside Velocity</div>
+          <h2 class="section-title">One foundation. Many focused products.</h2>
+          <p class="platform-copy">Velocity brings reusable platform capabilities and AI-assisted experiences together, allowing each domain product to solve its own problems without rebuilding the fundamentals.</p>
+        </div>
+        <div class="capability-list">
+          <div class="capability"><div class="capability-number">01</div><div><h3>Intelligent by design</h3><p>AI is built into useful workflows and decision points—not added as decoration.</p></div></div>
+          <div class="capability"><div class="capability-number">02</div><div><h3>Multi-tenant at the core</h3><p>Tenant isolation, configuration and permissions support products that can grow across organisations.</p></div></div>
+          <div class="capability"><div class="capability-number">03</div><div><h3>Composable capabilities</h3><p>Identity, notifications, payments, files, reports and integrations form a reusable product foundation.</p></div></div>
+          <div class="capability"><div class="capability-number">04</div><div><h3>Built for real operations</h3><p>Domain products can serve stays, schools, companies, properties and communities on the same platform vision.</p></div></div>
+        </div>
+      </div>
+    </section>
 
+    <section id="principles">
+      <div class="shell">
+        <div class="section-kicker">How we build</div>
+        <h2 class="section-title">Purposeful products, engineered for trust.</h2>
+        <div class="principles-grid">
+          <article class="principle"><div class="principle-index">01</div><h3>Human-centred AI</h3><p>We use intelligence to simplify decisions and reduce repetitive work while keeping people in control.</p></article>
+          <article class="principle"><div class="principle-index">02</div><h3>Secure by design</h3><p>Clear access controls, tenant separation and responsible data handling begin at the architecture level.</p></article>
+          <article class="principle"><div class="principle-index">03</div><h3>Built to evolve</h3><p>Modular services and product-led thinking help every experience grow without losing its focus.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <div class="shell">
+        <div class="about-card">
+          <h2>Products with technology underneath—and purpose at the centre.</h2>
+          <div>
+            <p>Spanar Systems is an India-based software product company building platforms that connect strong engineering with clear, thoughtful experiences.</p>
+            <p>Our work spans AI-enabled SaaS infrastructure and consumer products, beginning with Velocity and Temple. We are building carefully, learning continuously and designing for lasting usefulness.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="shell">
+        <div class="contact-card">
+          <h2>Let’s shape what’s next.</h2>
+          <p>Interested in our products, partnerships or joining the journey?</p>
+          <a class="button" href="mailto:admin@spanarsystems.com">admin@spanarsystems.com <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-wrap">
+      <div>© <span id="year"></span> Spanar Systems Private Limited · Hyderabad, Telangana, India</div>
+      <div class="footer-links"><a href="#products">Products</a><a href="privacy.html">Privacy</a><a href="https://github.com/SpanarSystems" rel="noopener">GitHub</a></div>
     </div>
-  </header><!-- End Header -->
-
-  <!-- ======= Hero Section ======= -->
-  <section id="hero" class="d-flex align-items-center">
-    <div class="container" data-aos="zoom-out" data-aos-delay="100">
-      <h1>Welcome to <span>Spanar Systems</span></h1>
-      <h2>We are a dynamic and innovative company specializing in 
-        software consulting, IT services, man power outsourcing, 
-        and freelancing. With a passion for delivering 
-        cutting-edge solutions, we strive to transform 
-        businesses by harnessing the power of technology.</h2>
-      <div class="d-flex">
-        <a href="#about" class="btn-get-started scrollto">Get Started</a>
-        <!-- <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="glightbox btn-watch-video"><i class="bi bi-play-circle"></i><span>Watch Video</span></a> -->
-      </div>
-    </div>
-  </section><!-- End Hero -->
-
-  <main id="main">
-
-    <!-- ======= Featured Services Section ======= -->
-    <section id="featured-services" class="featured-services">
-      <div class="container" data-aos="fade-up">
-
-        <div class="row">
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
-              <div class="icon"><i class="bx bxl-dribbble"></i></div>
-              <h4 class="title"><a href="">Digital Transformation</a></h4>
-              <p class="description">Embrace the power of digital transformation with Spanar Systems. We help businesses leverage cutting-edge technologies and innovative strategies to adapt, thrive, and stay ahead in today's digital era.</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="200">
-              <div class="icon"><i class="bx bx-file"></i></div>
-              <h4 class="title"><a href="">Agile Software Development</a></h4>
-              <p class="description">Experience the benefits of agile software development with Spanar Systems. Our team follows agile methodologies to deliver iterative, customer-centric software solutions that are flexible, efficient, and continuously evolving.</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="300">
-              <div class="icon"><i class="bx bx-tachometer"></i></div>
-              <h4 class="title"><a href="">IT Consulting Services</a></h4>
-              <p class="description">Gain valuable insights and expert guidance with Spanar Systems's IT consulting services. Our experienced consultants offer strategic advice, technology roadmaps, and comprehensive solutions to optimize your IT infrastructure and drive business growth.</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="400">
-              <div class="icon"><i class="bx bx-world"></i></div>
-              <h4 class="title"><a href="">Outsourcing Solutions</a></h4>
-              <p class="description">Simplify your operations and unlock efficiency with Spanar Systems's outsourcing solutions. Whether you need skilled resources, project management support, or complete project outsourcing, we provide reliable and cost-effective solutions tailored to your requirements.</p>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section><!-- End Featured Services Section -->
-
-    <!-- ======= About Section ======= -->
-    <section id="about" class="about section-bg">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>About</h2>
-          <h3>Find Out More <span>About Us</span></h3>
-          <p>Discover the story behind Spanar Systems and explore our commitment to delivering innovative software solutions. Learn how our expertise, passion, and client-focused approach set us apart in the industry.</p>
-        </div>
-
-        <div class="row">
-          <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
-            <img src="assets/img/about.jpg" class="img-fluid" alt="">
-          </div>
-          <div class="col-lg-6 pt-4 pt-lg-0 content d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="100">
-            <h3>Empowering Businesses Through Innovative Software Solutions.</h3>
-            <p class="fst-italic">
-              At Spanar Systems, we specialize in delivering cutting-edge software solutions that drive business growth. With a focus on innovation, quality, and customer satisfaction, we empower organizations to stay ahead in today's competitive digital landscape.
-            </p>
-            <ul>
-              <li>
-                <i class="bx bx-store-alt"></i>
-                <div>
-                  <h5>Cutting-edge software solutions that drive business growth</h5>
-                  <p>We provide advanced software solutions tailored to meet the evolving needs of businesses, enabling them to stay ahead in a rapidly changing market.</p>
-                </div>
-              </li>
-              <li>
-                <i class="bx bx-images"></i>
-                <div>
-                  <h5>Innovation, quality, and customer satisfaction as our core principles</h5>
-                  <p>We prioritize innovation, ensure top-notch quality in our deliverables, and strive for customer satisfaction, forming the foundation of our approach to software development and client partnerships.</p>
-                </div>
-              </li>
-            </ul>
-            <!-- <p>
-              Spanar Systems is a leading provider of innovative software solutions, empowering businesses to thrive in the digital era. With a dedicated team of experts, we deliver cutting-edge technology, unmatched quality, and a client-centric approach. Our mission is to drive business growth and success by delivering tailored solutions, fostering innovation, and ensuring exceptional customer satisfaction.
-            </p> -->
-          </div>
-        </div>
-
-      </div>
-    </section><!-- End About Section -->
-
-    <!-- ======= Skills Section ======= -->
-    
-
-    <!-- ======= Counts Section ======= -->
-    <section id="counts" class="counts">
-      <div class="container" data-aos="fade-up">
-
-        <div class="row">
-
-          <div class="col-lg-3 col-md-6">
-            <div class="count-box">
-              <i class="bi bi-emoji-smile"></i>
-              <span data-purecounter-start="0" data-purecounter-end="6" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Happy Clients</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 mt-5 mt-md-0">
-            <div class="count-box">
-              <i class="bi bi-journal-richtext"></i>
-              <span data-purecounter-start="0" data-purecounter-end="10" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Projects</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
-            <div class="count-box">
-              <i class="bi bi-headset"></i>
-              <span data-purecounter-start="0" data-purecounter-end="2000" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Hours Of Support</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
-            <div class="count-box">
-              <i class="bi bi-people"></i>
-              <span data-purecounter-start="0" data-purecounter-end="10" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Hard Workers</p>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section><!-- End Counts Section -->
-
-    <!-- ======= Clients Section ======= -->
-    <!-- <section id="clients" class="clients section-bg">
-      <div class="container" data-aos="zoom-in">
-
-        <div class="row">
-
-          <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-            <img src="assets/img/clients/client-1.png" class="img-fluid" alt="">
-          </div>
-
-          <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-            <img src="assets/img/clients/client-2.png" class="img-fluid" alt="">
-          </div>
-
-          <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-            <img src="assets/img/clients/client-3.png" class="img-fluid" alt="">
-          </div>
-
-          <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-            <img src="assets/img/clients/client-4.png" class="img-fluid" alt="">
-          </div>
-
-          <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-            <img src="assets/img/clients/client-5.png" class="img-fluid" alt="">
-          </div>
-
-          <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-            <img src="assets/img/clients/client-6.png" class="img-fluid" alt="">
-          </div>
-
-        </div>
-
-      </div>
-    </section> -->
-    <!-- End Clients Section -->
-
-    <!-- ======= Services Section ======= -->
-    <section id="services" class="services">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Services</h2>
-          <h3>Check our <span>Services</span></h3>
-          <p>Our comprehensive range of services is designed to meet your unique software needs and drive your business forward.</p>
-        </div>
-
-        <div class="row">
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
-            <div class="icon-box">
-              <div class="icon"><i class="bx bxl-dribbble"></i></div>
-              <h4><a href="">Software Consulting</a></h4>
-              <p>Our expert consultants provide strategic guidance and advice to help businesses optimize their software solutions, streamline processes, and achieve their objectives.</p>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
-            <div class="icon-box">
-              <div class="icon"><i class="bx bx-file"></i></div>
-              <h4><a href="">Custom Software Development</a></h4>
-              <p>We specialize in developing tailored software solutions that align with your specific business requirements, leveraging the latest technologies and best practices.</p>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0" data-aos="zoom-in" data-aos-delay="300">
-            <div class="icon-box">
-              <div class="icon"><i class="bx bx-tachometer"></i></div>
-              <h4><a href="">IT Infrastructure Support</a></h4>
-              <p>Our team offers comprehensive IT infrastructure support, ensuring the smooth operation and security of your systems, networks, and hardware.</p>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="100">
-            <div class="icon-box">
-              <div class="icon"><i class="bx bx-world"></i></div>
-              <h4><a href="">Cloud Solutions</a></h4>
-              <p>We help businesses harness the power of the cloud by providing scalable and secure cloud solutions, enabling efficient data storage, seamless collaboration, and flexible access.</p>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="200">
-            <div class="icon-box">
-              <div class="icon"><i class="bx bx-slideshow"></i></div>
-              <h4><a href="">Mobile App Development</a></h4>
-              <p>Our skilled developers create innovative and user-friendly mobile applications across platforms, enabling you to reach and engage your customers effectively.</p>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="300">
-            <div class="icon-box">
-              <div class="icon"><i class="bx bx-arch"></i></div>
-              <h4><a href="">Quality Assurance and Testing</a></h4>
-              <p>We ensure the reliability and performance of your software solutions through rigorous testing and quality assurance processes, minimizing risks and maximizing user satisfaction.</p>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section><!-- End Services Section -->
-
-    <!-- ======= Testimonials Section ======= -->
-    <!-- <section id="testimonials" class="testimonials">
-      <div class="container" data-aos="zoom-in">
-
-        <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
-          <div class="swiper-wrapper">
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
-                <h3>Saul Goodman</h3>
-                <h4>Ceo &amp; Founder</h4>
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-              </div>
-            </div>
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
-                <h3>Sara Wilsson</h3>
-                <h4>Designer</h4>
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-              </div>
-            </div>
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
-                <h3>Jena Karlis</h3>
-                <h4>Store Owner</h4>
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-              </div>
-            </div>
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
-                <h3>Matt Brandon</h3>
-                <h4>Freelancer</h4>
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-              </div>
-            </div>
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
-                <h3>John Larson</h3>
-                <h4>Entrepreneur</h4>
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-              </div>
-            </div>
-
-          </div>
-          <div class="swiper-pagination"></div>
-        </div>
-
-      </div>
-    </section> -->
-    <!-- End Testimonials Section -->
-
-    <!-- ======= Portfolio Section ======= -->
-    <!-- <section id="portfolio" class="portfolio">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Portfolio</h2>
-          <h3>Check our <span>Portfolio</span></h3>
-          <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p>
-        </div>
-
-        <div class="row" data-aos="fade-up" data-aos-delay="100">
-          <div class="col-lg-12 d-flex justify-content-center">
-            <ul id="portfolio-flters">
-              <li data-filter="*" class="filter-active">All</li>
-              <li data-filter=".filter-app">App</li>
-              <li data-filter=".filter-card">Card</li>
-              <li data-filter=".filter-web">Web</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <img src="assets/img/portfolio/portfolio-1.jpg" class="img-fluid" alt="">
-            <div class="portfolio-info">
-              <h4>App 1</h4>
-              <p>App</p>
-              <a href="assets/img/portfolio/portfolio-1.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="App 1"><i class="bx bx-plus"></i></a>
-              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-            <img src="assets/img/portfolio/portfolio-2.jpg" class="img-fluid" alt="">
-            <div class="portfolio-info">
-              <h4>Web 3</h4>
-              <p>Web</p>
-              <a href="assets/img/portfolio/portfolio-2.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Web 3"><i class="bx bx-plus"></i></a>
-              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <img src="assets/img/portfolio/portfolio-3.jpg" class="img-fluid" alt="">
-            <div class="portfolio-info">
-              <h4>App 2</h4>
-              <p>App</p>
-              <a href="assets/img/portfolio/portfolio-3.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="App 2"><i class="bx bx-plus"></i></a>
-              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <img src="assets/img/portfolio/portfolio-4.jpg" class="img-fluid" alt="">
-            <div class="portfolio-info">
-              <h4>Card 2</h4>
-              <p>Card</p>
-              <a href="assets/img/portfolio/portfolio-4.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Card 2"><i class="bx bx-plus"></i></a>
-              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-            <img src="assets/img/portfolio/portfolio-5.jpg" class="img-fluid" alt="">
-            <div class="portfolio-info">
-              <h4>Web 2</h4>
-              <p>Web</p>
-              <a href="assets/img/portfolio/portfolio-5.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Web 2"><i class="bx bx-plus"></i></a>
-              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <img src="assets/img/portfolio/portfolio-6.jpg" class="img-fluid" alt="">
-            <div class="portfolio-info">
-              <h4>App 3</h4>
-              <p>App</p>
-              <a href="assets/img/portfolio/portfolio-6.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="App 3"><i class="bx bx-plus"></i></a>
-              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <img src="assets/img/portfolio/portfolio-7.jpg" class="img-fluid" alt="">
-            <div class="portfolio-info">
-              <h4>Card 1</h4>
-              <p>Card</p>
-              <a href="assets/img/portfolio/portfolio-7.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Card 1"><i class="bx bx-plus"></i></a>
-              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <img src="assets/img/portfolio/portfolio-8.jpg" class="img-fluid" alt="">
-            <div class="portfolio-info">
-              <h4>Card 3</h4>
-              <p>Card</p>
-              <a href="assets/img/portfolio/portfolio-8.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Card 3"><i class="bx bx-plus"></i></a>
-              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-            <img src="assets/img/portfolio/portfolio-9.jpg" class="img-fluid" alt="">
-            <div class="portfolio-info">
-              <h4>Web 3</h4>
-              <p>Web</p>
-              <a href="assets/img/portfolio/portfolio-9.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Web 3"><i class="bx bx-plus"></i></a>
-              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section> -->
-    <!-- End Portfolio Section -->
-
-    <!-- ======= Team Section ======= -->
-    <!-- <section id="team" class="team section-bg">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Team</h2>
-          <h3>Our Hardworking <span>Team</span></h3>
-          <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p>
-        </div>
-
-        <div class="row">
-
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
-            <div class="member">
-              <div class="member-img">
-                <img src="assets/img/team/team-1.jpg" class="img-fluid" alt="">
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>Walter White</h4>
-                <span>Chief Executive Officer</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
-            <div class="member">
-              <div class="member-img">
-                <img src="assets/img/team/team-2.jpg" class="img-fluid" alt="">
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>Sarah Jhonson</h4>
-                <span>Product Manager</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="300">
-            <div class="member">
-              <div class="member-img">
-                <img src="assets/img/team/team-3.jpg" class="img-fluid" alt="">
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>William Anderson</h4>
-                <span>CTO</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="400">
-            <div class="member">
-              <div class="member-img">
-                <img src="assets/img/team/team-4.jpg" class="img-fluid" alt="">
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>Amanda Jepson</h4>
-                <span>Accountant</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section> -->
-    <!-- End Team Section -->
-
-    <!-- ======= Pricing Section ======= -->
-    <!-- <section id="pricing" class="pricing">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Pricing</h2>
-          <h3>Check our <span>Pricing</span></h3>
-          <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p>
-        </div>
-
-        <div class="row">
-
-          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="box">
-              <h3>Free</h3>
-              <h4><sup>$</sup>0<span> / month</span></h4>
-              <ul>
-                <li>Aida dere</li>
-                <li>Nec feugiat nisl</li>
-                <li>Nulla at volutpat dola</li>
-                <li class="na">Pharetra massa</li>
-                <li class="na">Massa ultricies mi</li>
-              </ul>
-              <div class="btn-wrap">
-                <a href="#" class="btn-buy">Buy Now</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 mt-4 mt-md-0" data-aos="fade-up" data-aos-delay="200">
-            <div class="box featured">
-              <h3>Business</h3>
-              <h4><sup>$</sup>19<span> / month</span></h4>
-              <ul>
-                <li>Aida dere</li>
-                <li>Nec feugiat nisl</li>
-                <li>Nulla at volutpat dola</li>
-                <li>Pharetra massa</li>
-                <li class="na">Massa ultricies mi</li>
-              </ul>
-              <div class="btn-wrap">
-                <a href="#" class="btn-buy">Buy Now</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="300">
-            <div class="box">
-              <h3>Developer</h3>
-              <h4><sup>$</sup>29<span> / month</span></h4>
-              <ul>
-                <li>Aida dere</li>
-                <li>Nec feugiat nisl</li>
-                <li>Nulla at volutpat dola</li>
-                <li>Pharetra massa</li>
-                <li>Massa ultricies mi</li>
-              </ul>
-              <div class="btn-wrap">
-                <a href="#" class="btn-buy">Buy Now</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="400">
-            <div class="box">
-              <span class="advanced">Advanced</span>
-              <h3>Ultimate</h3>
-              <h4><sup>$</sup>49<span> / month</span></h4>
-              <ul>
-                <li>Aida dere</li>
-                <li>Nec feugiat nisl</li>
-                <li>Nulla at volutpat dola</li>
-                <li>Pharetra massa</li>
-                <li>Massa ultricies mi</li>
-              </ul>
-              <div class="btn-wrap">
-                <a href="#" class="btn-buy">Buy Now</a>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section> -->
-    <!-- End Pricing Section -->
-
-    <!-- ======= Frequently Asked Questions Section ======= -->
-    <!-- <section id="faq" class="faq section-bg">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>F.A.Q</h2>
-          <h3>Frequently Asked <span>Questions</span></h3>
-          <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p>
-        </div>
-
-        <div class="row justify-content-center">
-          <div class="col-xl-10">
-            <ul class="faq-list">
-
-              <li>
-                <div data-bs-toggle="collapse" class="collapsed question" href="#faq1">Non consectetur a erat nam at lectus urna duis? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
-                <div id="faq1" class="collapse" data-bs-parent=".faq-list">
-                  <p>
-                    Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non curabitur gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.
-                  </p>
-                </div>
-              </li>
-
-              <li>
-                <div data-bs-toggle="collapse" href="#faq2" class="collapsed question">Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
-                <div id="faq2" class="collapse" data-bs-parent=".faq-list">
-                  <p>
-                    Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
-                  </p>
-                </div>
-              </li>
-
-              <li>
-                <div data-bs-toggle="collapse" href="#faq3" class="collapsed question">Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
-                <div id="faq3" class="collapse" data-bs-parent=".faq-list">
-                  <p>
-                    Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis tellus. Urna molestie at elementum eu facilisis sed odio morbi quis
-                  </p>
-                </div>
-              </li>
-
-              <li>
-                <div data-bs-toggle="collapse" href="#faq4" class="collapsed question">Ac odio tempor orci dapibus. Aliquam eleifend mi in nulla? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
-                <div id="faq4" class="collapse" data-bs-parent=".faq-list">
-                  <p>
-                    Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
-                  </p>
-                </div>
-              </li>
-
-              <li>
-                <div data-bs-toggle="collapse" href="#faq5" class="collapsed question">Tempus quam pellentesque nec nam aliquam sem et tortor consequat? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
-                <div id="faq5" class="collapse" data-bs-parent=".faq-list">
-                  <p>
-                    Molestie a iaculis at erat pellentesque adipiscing commodo. Dignissim suspendisse in est ante in. Nunc vel risus commodo viverra maecenas accumsan. Sit amet nisl suscipit adipiscing bibendum est. Purus gravida quis blandit turpis cursus in
-                  </p>
-                </div>
-              </li>
-
-              <li>
-                <div data-bs-toggle="collapse" href="#faq6" class="collapsed question">Tortor vitae purus faucibus ornare. Varius vel pharetra vel turpis nunc eget lorem dolor? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
-                <div id="faq6" class="collapse" data-bs-parent=".faq-list">
-                  <p>
-                    Laoreet sit amet cursus sit amet dictum sit amet justo. Mauris vitae ultricies leo integer malesuada nunc vel. Tincidunt eget nullam non nisi est sit amet. Turpis nunc eget lorem dolor sed. Ut venenatis tellus in metus vulputate eu scelerisque. Pellentesque diam volutpat commodo sed egestas egestas fringilla phasellus faucibus. Nibh tellus molestie nunc non blandit massa enim nec.
-                  </p>
-                </div>
-              </li>
-
-            </ul>
-          </div>
-        </div>
-
-      </div>
-    </section> -->
-    <!-- End Frequently Asked Questions Section -->
-
-    <!-- ======= Contact Section ======= -->
-    <section id="contact" class="contact">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Contact</h2>
-          <h3><span>Contact Us</span></h3>
-          <p>We look forward to hearing from you and discussing how we can help your business thrive.</p>
-        </div>
-
-        <div class="row" data-aos="fade-up" data-aos-delay="100">
-          <div class="col-lg-6">
-            <div class="info-box mb-4">
-              <i class="bx bx-map"></i>
-              <h3>Our Address</h3>
-              <p>Flat No: 401, Koteswari Nilayam, Road No 8,
-                 Vivekakanda Nagar, Madhapur, Hyderabad 500018</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6">
-            <div class="info-box  mb-4">
-              <i class="bx bx-envelope"></i>
-              <h3>Email Us</h3>
-              <p>venkataprasadm@spanarsystems.com</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6">
-            <div class="info-box  mb-4">
-              <i class="bx bx-phone-call"></i>
-              <h3>Call Us</h3>
-              <p>+91 8106884134</p>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- <div class="row" data-aos="fade-up" data-aos-delay="100">
-
-          <div class="col-lg-6 ">
-            <iframe class="mb-4 mb-lg-0" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" style="border:0; width: 100%; height: 384px;" allowfullscreen></iframe>
-          </div>
-
-          <div class="col-lg-6">
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-              <div class="row">
-                <div class="col form-group">
-                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
-                </div>
-                <div class="col form-group">
-                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
-                </div>
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
-              </div>
-              <div class="form-group">
-                <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
-              </div>
-              <div class="my-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
-              </div>
-              <div class="text-center"><button type="submit">Send Message</button></div>
-            </form>
-          </div>
-
-        </div> -->
-
-      </div>
-    </section><!-- End Contact Section -->
-
-  </main><!-- End #main -->
-
-  <!-- ======= Footer ======= -->
-  <footer id="footer">
-
-    <!-- <div class="footer-newsletter">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-6">
-            <h4>Join Our Newsletter</h4>
-            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
-            <form action="" method="post">
-              <input type="email" name="email"><input type="submit" value="Subscribe">
-            </form>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-    <div class="footer-top">
-      <div class="container">
-        <div class="row">
-
-          <div class="col-lg-3 col-md-6 footer-contact">
-            <h3><span>Spanar Systems</span> Group</h3>
-            <p>
-              Flat 401, Koteswari Nilayam, <br>
-              Road No-8, Vivekananda Nagar, <br>
-              Madhapur, Hyderabad 500018<br>
-              India <br><br>
-              <strong>Phone:</strong> +91 8106884134<br>
-              <strong>Email:</strong> venkataprasadm@spanarsystems.com<br>
-            </p>
-          </div>
-
-          <div class="col-lg-3 col-md-6 footer-links">
-            <h4>Useful Links</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-3 col-md-6 footer-links">
-            <h4>Our Services</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="privacy.html" target="_blank">Privacy Policy</a></li>
-            </ul>
-          </div>
-
-          <!-- <div class="col-lg-3 col-md-6 footer-links">
-            <h4>Our Social Networks</h4>
-            <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
-            <div class="social-links mt-3">
-              <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-              <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-              <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-              <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-              <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-            </div>
-          </div> -->
-
-        </div>
-      </div>
-    </div>
-
-    <div class="container py-4">
-      <div class="copyright">
-        &copy; Copyright <strong><span>Spanar Systems</span></strong>. All Rights Reserved
-      </div>
-    </div>
-  </footer><!-- End Footer -->
-
-  <div id="preloader"></div>
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-
-  <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
-
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const menuButton = document.querySelector('.menu-button');
+    const navLinks = document.querySelector('.nav-links');
+    menuButton.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      menuButton.setAttribute('aria-expanded', String(isOpen));
+    });
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      menuButton.setAttribute('aria-expanded', 'false');
+    }));
+  </script>
 </body>
-
 </html>
