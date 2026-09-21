@@ -33,6 +33,12 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Verify production files
+        run: |
+          test -f index.html
+          test -f assets/css/spanar-next.css
+          test -f assets/img/spanar-favicon.svg
+          grep -q "AI-native products" index.html
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
