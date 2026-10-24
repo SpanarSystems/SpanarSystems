@@ -4,11 +4,13 @@
 Edit SALES_* below (set SALES_PHONE to show a phone number everywhere), then run:
     python3 tools/build_solutions.py
 """
-import json, re, html
+import json, re, html, sys
 from pathlib import Path
 from datetime import date
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from products_data import PRODUCTS
 SITE = "https://www.spanarsystems.com"
 SALES_EMAIL = "sales@spanarsystems.com"   # sales mailbox (same one Nova uses)
 SALES_PHONE = "+91 74164 77658"           # call + WhatsApp; shown on every page, in schema and tel:/wa.me links
@@ -122,7 +124,7 @@ DOMAINS = [
   faq=[("Do you use GPS hardware?","We integrate with common GPS devices and also support smartphone-based tracking."),("Is there a driver mobile app?","Yes, with trip updates, navigation links and proof of delivery."),("Can customers track their delivery?","Yes, via shareable live tracking links.")]),
 ]
 
-CSS_NAV = '<nav class="nav"><a class="brand brand-logo" href="../index.html" aria-label="Spanar Systems home"><img src="../assets/img/spanar-logo-official.png" alt="Spanar Systems"></a><div class="links"><a href="../index.html#products">Products</a><a href="../solutions/">Solutions</a><a href="../index.html#contact">Contact</a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false"><span class="theme-track"><span class="theme-icon sun">☀</span><span class="theme-icon moon">☾</span><span class="theme-thumb"></span></span></button><a class="pill primary" href="../index.html#contact">Get a demo ↗</a></div></nav>'
+CSS_NAV = '<nav class="nav"><a class="brand brand-logo" href="../index.html" aria-label="Spanar Systems home"><img src="../assets/img/spanar-logo-official.png" alt="Spanar Systems"></a><div class="links"><a href="../products/">AI products</a><a href="../solutions/">Solutions</a><a href="../index.html#contact">Contact</a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false"><span class="theme-track"><span class="theme-icon sun">☀</span><span class="theme-icon moon">☾</span><span class="theme-thumb"></span></span></button><a class="pill primary" href="../index.html#contact">Get a demo ↗</a></div></nav>'
 
 def phone_html(prefix=""):
     if not SALES_PHONE: return ""
@@ -202,24 +204,78 @@ def build_hub():
     body = f'''<body>{CSS_NAV}<main><header class="product-hero"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a> / Solutions</nav><div class="eyebrow">Solutions by industry</div><h1>Software for the way your industry works.</h1><p class="lead">Clinics, security agencies, CA firms, schools, retail, real estate, logistics and mobile apps. Pick your domain and see sample screens.</p></div></header><section><div class="wrap"><div class="sol-grid">{cards}</div></div></section>{contact_strip("Enquiry: Spanar solutions")}</main>{foot()}<script src="../assets/js/spanar-next.js"></script></body></html>'''
     (ROOT / "solutions/index.html").write_text(head(title, desc, kw, "solutions/", ld) + body)
 
-def sub(text, tag, content):
-    pat = re.compile(rf"<!--{tag}-->.*?<!--/{tag}-->", re.S)
-    assert pat.search(text), tag
-    return pat.sub(lambda _: f"<!--{tag}-->{content}<!--/{tag}-->", text)
+def wa_link(text):
+    if not SALES_PHONE: return ""
+    return "https://wa.me/" + re.sub(r"\D", "", SALES_PHONE) + "?text=" + text.replace(" ", "%20")
+
+def product_cards(prefix):
+    return "".join(f'<a class="card sol-card reveal" href="{prefix}products/{p["slug"]}.html"><span class="sol-top"><span class="sol-icon">{p["icon"]}</span><span class="tag">{e(p["status"])}</span></span><h3>{e(p["name"])}</h3><small class="cat">{e(p["cat"])}</small><p>{e(p["tagline"])}</p><span class="more">See sample screens →</span></a>' for p in PRODUCTS)
+
+def build_product(pr):
+    path = f"products/{pr['slug']}.html"; url = f"{SITE}/{path}"
+    ld = {"@context": "https://schema.org", "@graph": [org_ld(),
+        {"@type": "SoftwareApplication", "name": pr["name"], "applicationCategory": "BusinessApplication", "description": pr["desc"], "url": url, "creator": {"@id": SITE + "/#org"}},
+        {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/"}, {"@type": "ListItem", "position": 2, "name": "AI products", "item": SITE + "/products/"}, {"@type": "ListItem", "position": 3, "name": pr["name"], "item": url}]},
+        {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in pr["faq"]]}]}
+    feats = "".join(f'<article class="card feature reveal"><span class="tag">{i+1:02d}</span><h3>{e(t)}</h3><p>{e(p)}</p></article>' for i, (t, p) in enumerate(pr["feats"]))
+    faq = "".join(f'<details class="faq-item"><summary>{e(q)}</summary><p>{e(a)}</p></details>' for q, a in pr["faq"])
+    others = "".join(f'<a class="chip" href="{o["slug"]}.html">{e(o["name"])}</a>' for o in PRODUCTS if o is not pr)
+    note = "we can build a tailored version for your business now." if pr["status"] == "Concept" else "talk to us for early access or a tailored build."
+    body = f'''<body>{CSS_NAV}<main><header class="product-hero"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a> / <a href="./">AI products</a> / {e(pr["name"])}</nav><div class="eyebrow">{e(pr["cat"])}</div><h1>{e(pr["name"])}<span class="gradient">.</span></h1><p class="status-line"><span class="pill">{e(pr["status"])}</span> <strong>{e(pr["tagline"])}</strong></p><p class="lead">{e(pr["lead"])}</p><div class="actions"><a class="pill primary" href="#talk">Get a demo or early access ↗</a><a class="pill" href="#preview">See sample screens ↓</a></div></div></header>
+<section id="preview"><div class="wrap"><div class="section-head reveal"><div><div class="eyebrow">Sample screens</div><h2>See the interface.</h2></div><p>Illustrative screens with dummy data to show the direction. Final designs are tailored to your workflow.</p></div><div class="shots reveal">{mock_desktop(pr["mock"])}{mock_phone(pr["mock"])}</div></div></section>
+<section><div class="wrap"><div class="section-head reveal"><div><div class="eyebrow">Capabilities</div><h2>What {e(pr["name"])} does.</h2></div><p>{e(pr["status"])}: {note}</p></div><div class="feature-grid">{feats}</div></div></section>
+<section><div class="wrap"><div class="section-head reveal"><div><div class="eyebrow">FAQ</div><h2>Common questions.</h2></div></div><div class="faq reveal">{faq}</div></div></section>
+<span id="talk"></span>{contact_strip("Demo request: " + pr["name"])}
+<section><div class="wrap"><div class="eyebrow">More AI products</div><div class="chips">{others}</div></div></section></main>{foot()}<script src="../assets/js/spanar-next.js"></script></body></html>'''
+    (ROOT / path).write_text(head(pr["title"], pr["desc"], pr["kw"], path, ld) + body)
+
+def build_products_hub():
+    title = "AI Products & Software by Spanar Systems | Velocity, AalayApp, Travai, Scribe & more"
+    desc = "Explore Spanar Systems AI products: Velocity, AalayApp, Travai and concepts like Scribe, Sentinel, Ledger, Concierge, Tutor and Route. See sample screens and talk to sales."
+    kw = "AI products India, AI software company Hyderabad, AI SaaS, AI assistant for business, AI clinic software, AI for CA firms, AI travel planner, temple app"
+    ld = {"@context": "https://schema.org", "@graph": [org_ld(), {"@type": "CollectionPage", "name": "Spanar Systems AI products", "url": SITE + "/products/", "hasPart": [{"@type": "SoftwareApplication", "name": p["name"], "url": f"{SITE}/products/{p['slug']}.html"} for p in PRODUCTS]}]}
+    body = f'<body>{CSS_NAV}<main><header class="product-hero"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a> / AI products</nav><div class="eyebrow">AI products</div><h1>AI software for how business really works.</h1><p class="lead">Products in development and concepts we can build for you now. Each has sample screens and a clear next step.</p></div></header><section><div class="wrap"><div class="sol-grid">{product_cards("../")}</div></div></section>{contact_strip("Enquiry: AI products")}</main>{foot()}<script src="../assets/js/spanar-next.js"></script></body></html>'
+    (ROOT / "products/index.html").write_text(head(title, desc, kw, "products/", ld) + body)
+
+def build_temple_redirect():
+    (ROOT / "products/temple.html").write_text(f'<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Temple is now AalayApp | Spanar Systems</title><meta name="robots" content="noindex"><link rel="canonical" href="{SITE}/products/aalay.html"><meta http-equiv="refresh" content="0; url=aalay.html"></head><body><p>Temple is now <a href="aalay.html">AalayApp</a>.</p></body></html>')
+
+LOADER = '<div id="ai-loader" class="ai-loader" aria-label="Spanar Systems launching"><div class="launch-terminal"><div class="launch-kicker">SPANAR / SYSTEM BOOT</div><div class="launch-type"><span id="launch-brand"></span><i></i></div><div class="launch-status" id="launch-status">initializing intelligence...</div><div class="launch-progress"><span></span></div></div></div>'
+SPARK = '<button class="spark-fab" id="spark-fab" aria-label="Open SPARK AI companion"><span>✦</span></button><aside class="spark-panel" id="spark-panel" aria-hidden="true"><div class="spark-head"><div><small>SPANAR AI AMBASSADOR</small><strong>SPARK</strong></div><button id="close-spark" aria-label="Close">×</button></div><div class="spark-body"><div class="spark-message">Hi. I’m SPARK. Ask me about our AI products and software, or talk to our sales team.</div><button data-answer="Velocity is our AI-native multi-tenant SaaS platform, currently in development.">What is Velocity?</button><button data-answer="AalayApp is our bilingual English and Telugu spiritual hub with temple guides, maps and more, on Android and web.">What is AalayApp?</button><button data-answer="We have in-development products (Velocity, AalayApp, Travai) and AI concepts we can build for you now: Scribe, Sentinel, Ledger, Concierge, Tutor, Route, Relay and Prism.">Which AI products do you have?</button><button data-answer="Email SALES_EMAIL_X or call or WhatsApp SALES_PHONE_X. We reply within one business day.">Talk to sales</button><div class="spark-answer" id="spark-answer">Choose a question and I’ll guide you.</div></div></aside>'
 
 def build_index():
-    p = ROOT / "index.html"; t = p.read_text()
-    cards = "".join(f'<a class="card sol-card reveal" href="solutions/{d["slug"]}.html"><span class="sol-icon">{d["icon"]}</span><h3>{e(d["name"])}</h3><p>{e(d["lead"])}</p><span class="more">See sample screens →</span></a>' for d in DOMAINS)
-    solutions = f'<section id="solutions"><div class="wrap"><div class="section-head reveal"><div><div class="eyebrow">Software &amp; services</div><h2>Built for your industry.</h2></div><p>Beyond our own products, we design and build custom software and mobile apps for businesses across domains. Explore each solution and its sample screens.</p></div><div class="sol-grid">{cards}</div></div></section>'
-    ph = phone_html()
-    contact = f'<section id="contact"><div class="wrap"><div class="card contact-card reveal"><div><div class="eyebrow">Sales &amp; enquiries</div><h2>Let us build it together.</h2><p class="lead">Tell us your domain and requirement. Our sales team replies within one business day.</p></div><ul class="contact-list"><li><span>Sales email</span><a href="{mailto("Enquiry: Spanar Systems")}">{e(SALES_EMAIL)}</a></li>{f"<li><span>Phone</span>{ph}</li>" if ph else ""}<li><span>Location</span>Hyderabad, Telangana, India</li><li><a class="pill primary" href="{mailto("Demo request")}">Request a demo ↗</a></li></ul></div></div></section>'
-    t = sub(t, "SOLUTIONS", solutions); t = sub(t, "CONTACT", contact)
-    ld = {"@context": "https://schema.org", "@graph": [org_ld(), {"@type": "WebSite", "@id": SITE + "/#website", "url": SITE + "/", "name": "Spanar Systems", "publisher": {"@id": SITE + "/#org"}}, {"@type": "ItemList", "name": "Spanar solutions", "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": d["name"], "url": f"{SITE}/solutions/{d['slug']}.html"} for i, d in enumerate(DOMAINS)]}]}
-    t = sub(t, "LD", f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>')
-    p.write_text(t)
+    title = "Spanar Systems | AI Software, Mobile Apps & Custom Software in Hyderabad"
+    desc = "Spanar Systems builds AI-native products and custom software for clinics, security agencies, CA firms, schools, retail, real estate and logistics. Mobile apps too. Get a free demo."
+    kw = "AI software company Hyderabad, custom software development India, mobile app development Hyderabad, clinic management software, security agency software, CA practice software, AI chatbot for business, AI products"
+    ph = phone_html(); tel = re.sub(r"[^\d+]", "", SALES_PHONE); digits = re.sub(r"\D", "", SALES_PHONE)
+    ld = {"@context": "https://schema.org", "@graph": [org_ld(), {"@type": "WebSite", "@id": SITE + "/#website", "url": SITE + "/", "name": "Spanar Systems", "publisher": {"@id": SITE + "/#org"}},
+        {"@type": "ItemList", "name": "Spanar AI products", "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": p["name"], "url": f"{SITE}/products/{p['slug']}.html"} for i, p in enumerate(PRODUCTS)]},
+        {"@type": "ItemList", "name": "Spanar solutions", "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": d["name"], "url": f"{SITE}/solutions/{d['slug']}.html"} for i, d in enumerate(DOMAINS)]}]}
+    opts = "".join(f"<option>{e(d['name'])}</option>" for d in DOMAINS) + "".join(f"<option>{e(p['name'])} (AI)</option>" for p in PRODUCTS) + "<option>Something else</option>"
+    sol_cards = "".join(f'<a class="card sol-card reveal" href="solutions/{d["slug"]}.html"><span class="sol-icon">{d["icon"]}</span><h3>{e(d["name"])}</h3><p>{e(d["lead"])}</p><span class="more">See sample screens →</span></a>' for d in DOMAINS)
+    steps = [("Talk","A free 30-minute call to understand your workflow and goals."),("Design","Clickable screens in days, so you see it before we build it."),("Build","Short sprints with a working demo every week."),("Launch & support","Go-live, training and ongoing improvements.")]
+    steps_html = "".join(f'<div class="step reveal"><b>{i+1:02d}</b><h3>{t}</h3><p>{d}</p></div>' for i, (t, d) in enumerate(steps))
+    wa = wa_link("Hi Spanar Systems, I would like a demo.")
+    hero_calls = (f'<a class="pill big" href="tel:{tel}">Call {e(SALES_PHONE)}</a><a class="pill big wa-pill" href="{wa}" rel="noopener">WhatsApp</a>') if SALES_PHONE else ""
+    mobile_bar = f'<div class="mobile-bar"><a href="tel:{tel}">Call</a><a href="{wa}" rel="noopener">WhatsApp</a><a class="p" href="#contact">Free demo</a></div>' if SALES_PHONE else ""
+    contact_ph = f'<li><span>Call or WhatsApp</span>{ph}</li>' if ph else ""
+    foot_ph = (" · " + ph) if ph else ""
+    spark = SPARK.replace("SALES_EMAIL_X", SALES_EMAIL).replace("SALES_PHONE_X", SALES_PHONE)
+    body = f'''
+<body>{LOADER}<nav class="nav"><a class="brand brand-logo" href="#top" aria-label="Spanar Systems home"><img src="assets/img/spanar-logo-official.png" alt="Spanar Systems"></a><div class="links"><a href="#products">AI products</a><a href="#solutions">Solutions</a><a href="#process">Process</a><a href="#contact">Contact</a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false"><span class="theme-track"><span class="theme-icon sun">☀</span><span class="theme-icon moon">☾</span><span class="theme-thumb"></span></span></button><a class="pill call" href="tel:{tel}">Call</a><a class="pill primary" href="#contact">Get a free demo ↗</a></div></nav>
+<main id="top"><header class="hero"><div class="wrap hero-grid"><div><div class="eyebrow">AI-native products · Hyderabad, India</div><h1>Software that runs<br>your business <span class="gradient">with AI.</span></h1><p class="lead">We design and build AI-powered software and mobile apps for clinics, security agencies, CA firms, schools, retail, real estate and logistics. See a working demo in days, not months.</p><div class="actions"><a class="pill primary big" href="#contact">Get a free demo ↗</a>{hero_calls}</div><ul class="trust"><li>Free demo and consultation</li><li>Reply within one business day</li><li>Built in Hyderabad</li></ul></div><div class="hero-visual">{mock_desktop(PRODUCTS[0]["mock"])}</div></div></header>
+<div class="marquee"><div class="marquee-track">CLINICS <b>✦</b> SECURITY <b>✦</b> CA FIRMS <b>✦</b> SCHOOLS <b>✦</b> RETAIL <b>✦</b> REAL ESTATE <b>✦</b> LOGISTICS <b>✦</b> MOBILE APPS <b>✦</b> CLINICS <b>✦</b> SECURITY <b>✦</b> CA FIRMS <b>✦</b> SCHOOLS <b>✦</b> RETAIL <b>✦</b> REAL ESTATE <b>✦</b> LOGISTICS <b>✦</b> MOBILE APPS <b>✦</b></div></div>
+<section id="products"><div class="wrap"><div class="section-head reveal"><div><div class="eyebrow">AI products</div><h2>AI software, ready to shape for you.</h2></div><p>Three products are in development and eight are concepts we can build for your business now. Every one has sample screens so you can picture it running in your company. <a href="products/">View all →</a></p></div><div class="sol-grid">{product_cards("")}</div></div></section>
+<section id="solutions"><div class="wrap"><div class="section-head reveal"><div><div class="eyebrow">Software &amp; services</div><h2>Built for your industry.</h2></div><p>Custom software and mobile apps, designed around how your business works. Explore each solution and its sample screens.</p></div><div class="sol-grid">{sol_cards}</div></div></section>
+<section id="intelligence"><div class="wrap"><div class="card ai-panel reveal"><div><div class="eyebrow">AI, without the theatre</div><h2 style="font-size:clamp(2.8rem,5vw,5.5rem);line-height:.95;letter-spacing:-.06em;margin:16px 0">Useful intelligence lives inside the workflow.</h2><p class="lead">We design AI around decisions: understand context, reduce repetitive work, suggest the next useful action and keep humans in control.</p></div><div class="console"><div class="console-top"><i class="dot"></i><i class="dot"></i><i class="dot"></i></div><div class="console-line"><strong>context</strong> → tenant + role + intent</div><div class="console-line"><strong>reason</strong> → retrieve + evaluate + explain</div><div class="console-line"><strong>assist</strong> → suggest next best action</div><div class="console-line"><strong>guardrail</strong> → permissions + audit + confirmation</div><div class="console-line"><strong>learn</strong> → feedback without losing control</div></div></div></div></section>
+<section id="process"><div class="wrap"><div class="section-head reveal"><div><div class="eyebrow">How we work</div><h2>From first call to live software.</h2></div><p>A simple, transparent process with a working demo at every stage.</p></div><div class="steps">{steps_html}</div></div></section>
+<section id="contact"><div class="wrap"><div class="card contact-card contact-big reveal"><div><div class="eyebrow">Talk to our sales team</div><h2>Tell us what you need. See a demo this week.</h2><p class="lead">Share your business and requirement. We reply within one business day, usually sooner.</p><ul class="contact-list"><li><span>Sales email</span><a href="{mailto("Enquiry: Spanar Systems")}">{e(SALES_EMAIL)}</a></li>{contact_ph}<li><span>Location</span>Hyderabad, Telangana, India</li></ul></div><form id="lead-form" class="lead-form" novalidate><label>Your name<input name="name" autocomplete="name" required></label><label>Phone or WhatsApp<input name="phone" type="tel" autocomplete="tel"></label><label>I am interested in<select name="interest">{opts}</select></label><label>Your requirement<textarea name="message" rows="3" placeholder="Tell us a little about your business"></textarea></label><div class="form-actions"><button class="pill primary" type="submit">Send by email ↗</button><button class="pill wa-pill" type="button" id="lead-wa">Send on WhatsApp</button></div><small>This opens your email or WhatsApp with your message ready to send. We do not store anything on this page.</small></form></div></div></section></main>
+{mobile_bar}{spark}
+<footer><div class="wrap foot"><span>© <span data-year></span> Spanar Systems Private Limited · Hyderabad, India</span><span><a href="products/">AI products</a> · <a href="solutions/">Solutions</a> · <a href="privacy.html">Privacy</a> · <a href="https://github.com/SpanarSystems" rel="noopener">GitHub</a> · <a href="mailto:{SALES_EMAIL}">{SALES_EMAIL}</a>{foot_ph}</span></div></footer><script>window.SPANAR={{email:"{SALES_EMAIL}",wa:"{digits}"}}</script><script src="assets/js/spanar-next.js"></script></body></html>'''
+    (ROOT / "index.html").write_text(head(title, desc, kw, "", ld, depth="") + body)
 
 def build_seo():
-    urls = [("", "1.0"), ("solutions/", "0.9")] + [(f"solutions/{d['slug']}.html", "0.8") for d in DOMAINS] + [(f"products/{n}.html", "0.6") for n in ("velocity", "temple", "travai", "relay", "prism")] + [("privacy.html", "0.2")]
+    urls = [("", "1.0"), ("products/", "0.9"), ("solutions/", "0.9")] + [(f"solutions/{d['slug']}.html", "0.8") for d in DOMAINS] + [(f"products/{p['slug']}.html", "0.7") for p in PRODUCTS] + [("privacy.html", "0.2")]
     x = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"  <url><loc>{SITE}/{u}</loc><lastmod>{TODAY}</lastmod><priority>{pr}</priority></url>\n" for u, pr in urls) + "</urlset>\n"
     (ROOT / "sitemap.xml").write_text(x)
     (ROOT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nDisallow: /forms/\n\nSitemap: {SITE}/sitemap.xml\n")
@@ -227,5 +283,7 @@ def build_seo():
 if __name__ == "__main__":
     (ROOT / "solutions").mkdir(exist_ok=True)
     for d in DOMAINS: build_page(d)
-    build_hub(); build_index(); build_seo()
+    build_hub()
+    for pr in PRODUCTS: build_product(pr)
+    build_products_hub(); build_temple_redirect(); build_index(); build_seo()
     print("built", len(DOMAINS), "solution pages")

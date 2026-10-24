@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://www.spanarsystems.com/</loc><lastmod>2026-10-24</lastmod><priority>1.0</priority></url>
+  <url><loc>https://www.spanarsystems.com/products/</loc><lastmod>2026-10-24</lastmod><priority>0.9</priority></url>
   <url><loc>https://www.spanarsystems.com/solutions/</loc><lastmod>2026-10-24</lastmod><priority>0.9</priority></url>
   <url><loc>https://www.spanarsystems.com/solutions/clinic-software.html</loc><lastmod>2026-10-24</lastmod><priority>0.8</priority></url>
   <url><loc>https://www.spanarsystems.com/solutions/mobile-app-development.html</loc><lastmod>2026-10-24</lastmod><priority>0.8</priority></url>
@@ -10,10 +11,16 @@
   <url><loc>https://www.spanarsystems.com/solutions/retail-pos-software.html</loc><lastmod>2026-10-24</lastmod><priority>0.8</priority></url>
   <url><loc>https://www.spanarsystems.com/solutions/real-estate-crm.html</loc><lastmod>2026-10-24</lastmod><priority>0.8</priority></url>
   <url><loc>https://www.spanarsystems.com/solutions/logistics-fleet-software.html</loc><lastmod>2026-10-24</lastmod><priority>0.8</priority></url>
-  <url><loc>https://www.spanarsystems.com/products/velocity.html</loc><lastmod>2026-10-24</lastmod><priority>0.6</priority></url>
-  <url><loc>https://www.spanarsystems.com/products/temple.html</loc><lastmod>2026-10-24</lastmod><priority>0.6</priority></url>
-  <url><loc>https://www.spanarsystems.com/products/travai.html</loc><lastmod>2026-10-24</lastmod><priority>0.6</priority></url>
-  <url><loc>https://www.spanarsystems.com/products/relay.html</loc><lastmod>2026-10-24</lastmod><priority>0.6</priority></url>
-  <url><loc>https://www.spanarsystems.com/products/prism.html</loc><lastmod>2026-10-24</lastmod><priority>0.6</priority></url>
+  <url><loc>https://www.spanarsystems.com/products/velocity.html</loc><lastmod>2026-10-24</lastmod><priority>0.7</priority></url>
+  <url><loc>https://www.spanarsystems.com/products/aalay.html</loc><lastmod>2026-10-24</lastmod><priority>0.7</priority></url>
+  <url><loc>https://www.spanarsystems.com/products/travai.html</loc><lastmod>2026-10-24</lastmod><priority>0.7</priority></url>
+  <url><loc>https://www.spanarsystems.com/products/scribe.html</loc><lastmod>2026-10-24</lastmod><priority>0.7</priority></url>
+  <url><loc>https://www.spanarsystems.com/products/sentinel.html</loc><lastmod>2026-10-24</lastmod><priority>0.7</priority></url>
+  <url><loc>https://www.spanarsystems.com/products/ledger.html</loc><lastmod>2026-10-24</lastmod><priority>0.7</priority></url>
+  <url><loc>https://www.spanarsystems.com/products/concierge.html</loc><lastmod>2026-10-24</lastmod><priority>0.7</priority></url>
+  <url><loc>https://www.spanarsystems.com/products/tutor.html</loc><lastmod>2026-10-24</lastmod><priority>0.7</priority></url>
+  <url><loc>https://www.spanarsystems.com/products/route.html</loc><lastmod>2026-10-24</lastmod><priority>0.7</priority></url>
+  <url><loc>https://www.spanarsystems.com/products/relay.html</loc><lastmod>2026-10-24</lastmod><priority>0.7</priority></url>
+  <url><loc>https://www.spanarsystems.com/products/prism.html</loc><lastmod>2026-10-24</lastmod><priority>0.7</priority></url>
   <url><loc>https://www.spanarsystems.com/privacy.html</loc><lastmod>2026-10-24</lastmod><priority>0.2</priority></url>
 </urlset>
