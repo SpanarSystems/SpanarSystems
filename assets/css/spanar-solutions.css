@@ -30,3 +30,4 @@ figcaption{font-size:.8rem;color:var(--muted);margin-top:10px;text-align:center}
 #solutions,#contact{padding-top:60px}
 @media(max-width:900px){.shots{grid-template-columns:1fr}.cta-strip,.contact-card{grid-template-columns:1fr;padding:26px}.cta-actions{justify-content:flex-start}.cta-mail{text-align:left}.shot-body{grid-template-columns:1fr}.shot-body aside{display:none}.kpis{grid-template-columns:repeat(2,1fr)}.shot-grid{grid-template-columns:1fr}}
 .shot.desk figcaption{margin:0;padding:10px;border-top:1px solid var(--line);background:var(--panel2)}
+.wa{color:#128c4a}

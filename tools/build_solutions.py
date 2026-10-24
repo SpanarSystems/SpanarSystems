@@ -11,7 +11,7 @@ from datetime import date
 ROOT = Path(__file__).resolve().parent.parent
 SITE = "https://www.spanarsystems.com"
 SALES_EMAIL = "sales@spanarsystems.com"   # sales mailbox (same one Nova uses)
-SALES_PHONE = ""                          # e.g. "+91 98765 43210" -> shown on every page, in schema and tel: links
+SALES_PHONE = "+91 74164 77658"           # call + WhatsApp; shown on every page, in schema and tel:/wa.me links
 TODAY = date.today().isoformat()
 e = html.escape
 
@@ -127,7 +127,8 @@ CSS_NAV = '<nav class="nav"><a class="brand brand-logo" href="../index.html" ari
 def phone_html(prefix=""):
     if not SALES_PHONE: return ""
     tel = re.sub(r"[^\d+]", "", SALES_PHONE)
-    return f'<a href="tel:{tel}">{e(SALES_PHONE)}</a>'
+    wa = tel.lstrip("+")
+    return f'<a href="tel:{tel}">{e(SALES_PHONE)}</a> <a class="wa" href="https://wa.me/{wa}" rel="noopener">WhatsApp</a>'
 
 def mailto(subject):
     return f"mailto:{SALES_EMAIL}?subject={subject.replace(' ', '%20').replace('&', 'and')}"
