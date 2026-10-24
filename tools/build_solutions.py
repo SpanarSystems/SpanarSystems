@@ -10,7 +10,7 @@ from datetime import date
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE = "https://www.spanarsystems.com"
-SALES_EMAIL = "admin@spanarsystems.com"   # change to a dedicated sales@ mailbox once it exists
+SALES_EMAIL = "sales@spanarsystems.com"   # sales mailbox (same one Nova uses)
 SALES_PHONE = ""                          # e.g. "+91 98765 43210" -> shown on every page, in schema and tel: links
 TODAY = date.today().isoformat()
 e = html.escape
