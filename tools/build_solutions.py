@@ -156,7 +156,7 @@ def head(title, desc, kw, path, jsonld, depth="../"):
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{e(title)}</title><meta name="description" content="{e(desc)}"><meta name="keywords" content="{e(kw)}">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1"><meta name="theme-color" content="#f6f8fb">
-<link rel="canonical" href="{url}"><link rel="icon" type="image/svg+xml" sizes="any" href="{depth}assets/img/spanar-favicon.svg?v=3">
+<link rel="canonical" href="{url}"><link rel="icon" type="image/svg+xml" href="{depth}assets/img/spanar-favicon.svg?v=4"><link rel="icon" type="image/png" sizes="32x32" href="{depth}assets/img/favicon.png?v=4"><link rel="icon" href="{depth}favicon.ico?v=4" sizes="48x48"><link rel="apple-touch-icon" href="{depth}assets/img/apple-touch-icon.png?v=4">
 <meta property="og:type" content="website"><meta property="og:site_name" content="Spanar Systems"><meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}"><meta property="og:url" content="{url}"><meta property="og:image" content="{SITE}/assets/img/spanar-logo-official.png">
 <meta name="twitter:card" content="summary"><meta name="twitter:title" content="{e(title)}"><meta name="twitter:description" content="{e(desc)}">
 <link rel="stylesheet" href="{depth}assets/css/spanar-next.css"><link rel="stylesheet" href="{depth}assets/css/spanar-solutions.css">
