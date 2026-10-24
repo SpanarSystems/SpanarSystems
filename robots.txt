@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /forms/
+
+Sitemap: https://www.spanarsystems.com/sitemap.xml
