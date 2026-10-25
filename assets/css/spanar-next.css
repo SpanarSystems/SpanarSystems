@@ -32,3 +32,6 @@ html[data-theme="dark"] .brand-logo img{filter:none!important}
 html[data-theme="dark"] .brand-logo{background:#fff!important;border-radius:14px;padding:2px 9px!important}
 html[data-theme="dark"] .brand-logo img{filter:none!important}
 @media(max-width:800px){.brand-logo{height:50px;min-width:172px}.brand-logo img{width:172px;height:50px}}
+
+/* Keep the compact mobile product header from overflowing narrow screens. */
+@media(max-width:560px){.nav{top:10px;width:calc(100% - 16px);padding:7px 9px}.nav .links{gap:8px}.nav .links>.pill{display:none}.brand-logo{height:44px;min-width:148px}.brand-logo img{width:148px;height:44px}.theme-track{width:58px;height:34px}.theme-thumb{width:23px;height:23px}.theme-icon{width:23px;height:23px}html[data-theme="dark"] .theme-thumb{transform:translateX(24px)}}
